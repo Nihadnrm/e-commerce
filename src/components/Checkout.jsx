@@ -27,7 +27,7 @@ const Checkout = () => {
       return;
     }
 
-    localStorage.setItem("order", JSON.stringify({ ...data, product }));
+    localStorage.setItem("order", JSON.stringify({ ...data, product } ));
 
 
     window.location.href = "/order-success";

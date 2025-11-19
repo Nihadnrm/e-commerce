@@ -1,7 +1,7 @@
 import React from "react";
 
 const OrderSuccess = () => {
-  const order = JSON.parse(localStorage.getItem("order")) || null;
+  const order = JSON.parse(localStorage.getItem("order")) ;
 
   if (!order) {
     return (

@@ -1,127 +1,96 @@
 import React from "react";
-import { orders } from "../assets/myorders";
 
 const statusColors = {
   Delivered: "bg-green-100 text-green-700",
   Shipped: "bg-blue-100 text-blue-700",
   Processing: "bg-yellow-100 text-yellow-700",
   Cancelled: "bg-red-100 text-red-700",
-  Returned: "bg-purple-100 text-purple-700",
 };
 
 const MyOrders = () => {
+  const order = JSON.parse(localStorage.getItem("order"));
+
+  if (!order) {
+    return (
+      <div className="px-6 py-20 text-center">
+        <h1 className="text-2xl font-bold text-red-500">No Orders Found</h1>
+        <p className="text-gray-600 mt-2">Please place an order first.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="px-4 sm:px-6 md:px-16 py-10">
       <h1 className="text-3xl md:text-4xl font-bold text-center mb-10">
         My Orders
       </h1>
 
-      {orders.length === 0 ? (
-        <p className="text-center text-gray-500 text-lg">
-          You have no orders yet.
-        </p>
-      ) : (
-        <div className="space-y-6">
-          {orders.slice(0, 5).map((order) => (
-            <div
-              key={order.orderId}
-              className="bg-white shadow-lg rounded-xl p-5 md:p-6 border"
+      <div className="bg-white shadow-lg rounded-xl p-6 border max-w-3xl mx-auto">
+
+        {/* ORDER DETAILS */}
+        <div className="mb-6">
+          <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
+
+          <p><strong>Name:</strong> {order.name}</p>
+          <p><strong>Address:</strong> {order.address}</p>
+          <p><strong>Phone:</strong> {order.phone}</p>
+          <p><strong>Date:</strong> {order.date}</p>
+
+          <p className="mt-2">
+            <strong>Status:</strong>{" "}
+            <span
+              className={`px-3 py-1 rounded-full text-sm ${statusColors["Processing"]}`}
             >
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              Processing
+            </span>
+          </p>
+        </div>
 
-                {/* left – Order Details */}
-                <div>
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2">
-                    <p className="font-semibold text-lg">
-                      Order ID:{" "}
-                      <span className="text-indigo-600">{order.orderId}</span>
-                    </p>
+        {/* PRODUCT DETAILS */}
+        {order.product && (
+          <div className="border-t pt-4">
+            <h2 className="text-xl font-semibold mb-3">Ordered Product</h2>
 
-                    <span
-                      className={`px-4 py-1 text-sm rounded-full font-medium ${statusColors[order.status]}`}
-                    >
-                      {order.status}
-                    </span>
-                  </div>
+            <div className="flex flex-col sm:flex-row items-start gap-4">
+              <img
+                src={order.product.image}
+                alt={order.product.name}
+                className="w-24 h-24 rounded-lg object-cover shadow"
+              />
 
-                  {/* Order Info */}
-                  <div className="text-gray-700 space-y-2">
-                    <p>
-                      <strong>Order Date:</strong> {order.orderDate}
-                    </p>
+              <div>
+                <h3 className="font-semibold text-lg">{order.product.name}</h3>
 
-                    {order.deliveryDate && (
-                      <p>
-                        <strong>Delivered On:</strong> {order.deliveryDate}
-                      </p>
-                    )}
+                <p className="text-gray-700 mt-1">
+                  <strong>Category:</strong> {order.product.category}
+                </p>
 
-                    {order.estimatedDelivery && (
-                      <p>
-                        <strong>Expected Delivery:</strong>{" "}
-                        {order.estimatedDelivery}
-                      </p>
-                    )}
+                <p className="text-gray-700 mt-1">
+                  <strong>Price:</strong> ₹{order.product.price}
+                </p>
 
-                    <p>
-                      <strong>Total Amount:</strong> ₹{order.totalAmount}
-                    </p>
-
-                    <p>
-                      <strong>Payment:</strong> {order.paymentMethod}
-                    </p>
-
-                    <p>
-                      <strong>Tracking:</strong> {order.trackingNumber}
-                    </p>
-                  </div>
-                </div>
-
-                {/* right – Items Section */}
-                <div className="md:border-l md:pl-6 md:border-l-gray-200">
-                  <h2 className="font-semibold text-lg mb-3 text-gray-800">
-                    Items
-                  </h2>
-
-                  {/* Make items scroll on small devices */}
-                  <div className="space-y-4 max-h-64 overflow-y-auto pr-1">
-                    {order.items.map((item, index) => (
-                      <div
-                        key={index}
-                        className="flex gap-4 items-start bg-gray-50 p-3 rounded-lg shadow-sm"
-                      >
-                        <img
-                          src={item.image}
-                          alt={item.productName}
-                          className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-md shadow"
-                        />
-
-                        <div>
-                          <h3 className="font-semibold">{item.productName}</h3>
-
-                          <p className="text-gray-600 text-sm">
-                            <strong>Qty:</strong> {item.quantity}
-                          </p>
-
-                          <p className="text-gray-600 text-sm">
-                            <strong>Price:</strong> ₹{item.price}
-                          </p>
-
-                          <p className="font-semibold text-indigo-600">
-                            Subtotal: ₹{(item.price * item.quantity).toFixed(2)}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
+                <p className="text-indigo-600 font-bold mt-2">
+                  Total Paid: ₹{order.product.price}
+                </p>
               </div>
             </div>
-          ))}
+          </div>
+        )}
+
+        {/* CLEAR ORDER BUTTON */}
+        <div className="text-center mt-6">
+          <button
+            onClick={() => {
+              localStorage.removeItem("order");
+              window.location.reload();
+            }}
+            className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+          >
+            Cancel Order
+          </button>
         </div>
-      )}
+
+      </div>
     </div>
   );
 };
