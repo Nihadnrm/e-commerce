@@ -33,6 +33,9 @@ const Allproducts = () => {
     localStorage.setItem("product", JSON.stringify(item));
     nav("/checkout");
   };
+  const handlecart=()=>{
+    alert("item added to the cart")
+  }
 
   return (
     <div className="py-12 px-4 sm:px-6 md:px-14 lg:px-20">
@@ -144,7 +147,7 @@ const Allproducts = () => {
 
           
                 <div className="mt-3 flex flex-col sm:flex-row gap-2">
-                  <button className="w-full sm:w-1/2 bg-indigo-400 text-white py-2 rounded-lg hover:bg-indigo-600 duration-300">
+                  <button onClick={handlecart} className="w-full sm:w-1/2 bg-indigo-400 text-white py-2 rounded-lg hover:bg-indigo-600 duration-300">
                     Add to Cart
                   </button>
 
