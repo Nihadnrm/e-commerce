@@ -3,7 +3,6 @@ import React from "react";
 const OrderSuccess = () => {
   const order = JSON.parse(localStorage.getItem("order")) || null;
 
-  // If no order stored (directly opening the page)
   if (!order) {
     return (
       <div className="px-6 py-20 text-center">
