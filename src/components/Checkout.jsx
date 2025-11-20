@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
+
+  const nav=useNavigate()
   const [product, setProduct] = useState(null);
 
   const [data, setdata] = useState({
@@ -34,7 +37,8 @@ const Checkout = () => {
     // Save new order + previous ones
     localStorage.setItem("order", JSON.stringify([...existingOrders, newOrder]));
 
-    window.location.href = "/order-success";
+    // window.location.href = "/order-success";
+    nav("/order-success")
   };
 
   return (
