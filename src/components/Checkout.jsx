@@ -32,8 +32,11 @@ const Checkout = () => {
 
     const newOrder = { ...data, product };
 
-    const existingOrders = JSON.parse(localStorage.getItem("order")) || [];
+let existingOrders = JSON.parse(localStorage.getItem("order"));
 
+if (!Array.isArray(existingOrders)) {
+  existingOrders = [];   // convert invalid data to empty array
+}
     // Save new order + previous ones
     localStorage.setItem("order", JSON.stringify([...existingOrders, newOrder]));
 
