@@ -27,8 +27,12 @@ const Checkout = () => {
       return;
     }
 
-    localStorage.setItem("order", JSON.stringify({ ...data, product } ));
+    const newOrder = { ...data, product };
 
+    const existingOrders = JSON.parse(localStorage.getItem("order")) || [];
+
+    // Save new order + previous ones
+    localStorage.setItem("order", JSON.stringify([...existingOrders, newOrder]));
 
     window.location.href = "/order-success";
   };
@@ -80,7 +84,7 @@ const Checkout = () => {
           </button>
         </div>
 
-        {/* right -product-details */}
+        {/* RIGHT — PRODUCT DETAILS */}
         {product && (
           <div className="bg-white p-6 shadow rounded-xl h-fit">
             <h2 className="text-xl font-semibold mb-4">Order Summary</h2>

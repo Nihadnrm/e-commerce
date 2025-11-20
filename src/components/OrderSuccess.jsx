@@ -1,7 +1,12 @@
 import React from "react";
 
 const OrderSuccess = () => {
-  const order = JSON.parse(localStorage.getItem("order")) ;
+  let order = JSON.parse(localStorage.getItem("order"));
+
+  // If "order" is saved as an array, use the first item
+  if (Array.isArray(order)) {
+    order = order[0];
+  }
 
   if (!order) {
     return (
@@ -26,7 +31,7 @@ const OrderSuccess = () => {
 
       {/* MAIN GRID — USER + PRODUCT */}
       <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-
+        
         {/* LEFT — USER DETAILS */}
         <div className="bg-white p-6 shadow-lg rounded-xl">
           <h2 className="text-xl font-semibold mb-3">Delivery Details</h2>
@@ -86,7 +91,6 @@ const OrderSuccess = () => {
           Continue Shopping
         </a>
       </div>
-
     </div>
   );
 };

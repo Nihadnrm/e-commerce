@@ -12,7 +12,7 @@ const Home = () => {
       name: "Boys Shirt",
       price: "₹699",
       image:
-        "https://media.istockphoto.com/id/1073644414/photo/adorable-young-teenage-boy-waist-up-studio-portrait-isolated-over-white-background-handsome.jpg?s=612x612&w=0&k=20&c=ZK9XWuYLC9eeei6cWCHkkIM1hio8xK4RL42GSV4dhQE=",
+        "https://thehouseofrare.com/cdn/shop/files/STOMBLACK01035-vmake.webp?v=1743511673",
     },
     {
       name: "Running Shoes",
@@ -132,34 +132,40 @@ const Home = () => {
       </section>
 
       {/*featured products*/}
+      {/*featured products*/}
       <section className="py-10 sm:py-12 px-4 sm:px-6 md:px-16 bg-gray-50">
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">
           Featured Products
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8">
+        {/* 2 cards per row on mobile */}
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
           {products.map((item, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden"
+              className="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden 
+                   max-w-[160px] mx-auto sm:max-w-none"
             >
               <Link to={"/allproducts"}>
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="w-full h-44 sm:h-48 object-cover rounded-t-xl"
+                  className="w-full aspect-[3/4] object-contain bg-white rounded-t-xl 
+                       p-1 sm:p-3 sm:aspect-[4/5]"
                 />
               </Link>
 
-              <div className="p-4">
-                <h3 className="font-semibold text-base sm:text-lg">
-                  {item.name}
-                </h3>
-                <p className="font-bold text-indigo-600 mt-2">{item.price}</p>
+              <div className="p-3 sm:p-4">
+                <h3 className="font-semibold text-sm sm:text-lg">{item.name}</h3>
+                <p className="font-bold text-indigo-600 mt-1 sm:mt-2">
+                  {item.price}
+                </p>
 
                 <button
                   onClick={handlecart}
-                  className="mt-3 w-full bg-indigo-500 text-white py-2 rounded-lg hover:bg-indigo-700 duration-300"
+                  className="mt-2 w-full bg-indigo-500 text-white py-1.5 sm:py-2 
+                       rounded-lg hover:bg-indigo-700 duration-300 
+                       text-sm sm:text-base"
                 >
                   Add to Cart
                 </button>
@@ -168,6 +174,7 @@ const Home = () => {
           ))}
         </div>
       </section>
+
 
       {/*another section*/}
       <section className="py-12 sm:py-16 bg-gradient-to-tr from-blue-400 to-indigo-600 text-white text-center px-6">
